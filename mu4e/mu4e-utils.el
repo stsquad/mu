@@ -746,7 +746,12 @@ Checks whether the server process is live."
 
 (defvar mu4e~get-mail-ask-password "mu4e get-mail: Enter password: "
   "Query string for `mu4e-get-mail-command' password.")
-(defvar mu4e~get-mail-password-regexp "^Remote: Enter password: $"
+
+(defvar mu4e~get-mail-password-regexp
+  (rx (: bol
+        (zero-or-more (in alnum "_"))
+        (or "P" "p") "ass" (or "word" "phrase") ":"
+        (zero-or-one " ") eol))
   "Regexp to match a password query in the `mu4e-get-mail-command' output.")
 
 (defun mu4e~request-contacts-maybe ()
