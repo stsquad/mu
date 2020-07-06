@@ -1041,10 +1041,11 @@ either 'to-server, 'from-server or 'misc. This function is meant for debugging."
 
         ;; if `mu4e-log-max-lines is specified and exceeded, clearest the oldest
         ;; lines
-        (when (> (buffer-size) mu4e~log-max-size)
-          (goto-char (- (buffer-size) mu4e~log-max-size))
-          (beginning-of-line)
-          (delete-region (point-min) (point)))))))
+        (save-excursion
+          (when (> (buffer-size) mu4e~log-max-size)
+            (goto-char (- (buffer-size) mu4e~log-max-size))
+            (beginning-of-line)
+            (delete-region (point-min) (point))))))))
 
 (defun mu4e-toggle-logging ()
   "Toggle between enabling/disabling debug-mode (in debug-mode,
